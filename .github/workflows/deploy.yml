@@ -1,0 +1,73 @@
+name: "DEPLOY API"
+
+on:
+  push:
+    branches:
+      - main
+
+ 
+env:
+  AZURE_WEBAPP_NAME: stanwebappService
+  AZURE_WEBAPP_PATH: './Published'
+  BuildConfiguration: Release
+  SOLUTION: 'ConvertSqlServerToSQLite.sln'
+  NETCORE_VERSION: '6.0'
+
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+
+     - uses: actions/checkout@v2
+
+     - name: Setup .NET Core SDK ${{ env.NETCORE_VERSION }}
+       uses: actions/setup-dotnet@v1
+       with:
+         dotnet-version: ${{ env.NETCORE_VERSION }}
+
+     - name: Setup Nuget
+       uses: nuget/setup-nuget@v1
+
+
+     - name: Build
+       run: dotnet build ${{env.SOLUTION}} -c ${{ env.BuildConfiguration }} 
+
+
+     - name: Publish Admin
+       run: dotnet publish ${{env.SOLUTION}} -c ${{ env.BuildConfiguration }}  -o ${{env.AZURE_WEBAPP_PATH}}
+
+     - name: Upload artifact Admin
+       uses: actions/upload-artifact@v2
+       with:
+         name: .net-build
+         path: ${{env.AZURE_WEBAPP_PATH}}
+
+
+  deploy:
+
+    name: Deploy
+    runs-on: windows-latest
+    needs: build
+
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-admin-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build
+        uses: actions/download-artifact@v2
+        with:
+          name: .net-build
+
+
+      - name: Deploy to Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{env.AZURE_WEBAPP_NAME}}
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAP }}
+          package: .

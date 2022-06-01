@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "o4T1P8doiA6bZ+735iKqRJbZKyW4DQsgYidg905QwAk=",
+  "Source": "ConvertSqlServerToSQLite",
+  "BasePath": "_content/ConvertSqlServerToSQLite",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

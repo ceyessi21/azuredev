@@ -1,0 +1,28 @@
+﻿USE [herodb]
+GO
+/****** Object:  Table [dbo].[personne]    Script Date: 31/05/2022 13:49:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[personne](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nchar](20) NOT NULL,
+	[country] [nchar](20) NOT NULL,
+	[old] [int] NOT NULL,
+ CONSTRAINT [PK_personne] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[personne] ON 
+
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (1, N'Constantin          ', N'TOGO                ', 24)
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (2, N'MYLENE              ', N'ITALIE              ', 28)
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (4, N'JULIEN              ', N'FRANCE              ', 32)
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (5, N'JING                ', N'CHINE               ', 26)
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (6, N'WALID               ', N'TUNISIE             ', 29)
+INSERT [dbo].[personne] ([id], [name], [country], [old]) VALUES (7, N'Jeremy              ', N'BELGQUE             ', 34)
+SET IDENTITY_INSERT [dbo].[personne] OFF
+GO
